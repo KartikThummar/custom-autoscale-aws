@@ -1,22 +1,44 @@
-from boto3 import client
 import boto3
 from botocore.exceptions import ClientError
 from utils.event import event_data, ApiGatewayResponse
 import shedule_table as st
 from shedule_event import datetime_to_cron, put_rule, attach_event_rule
 import os
+import json
+from datetime import datetime
+import time
 
 api_return = ApiGatewayResponse()
 
+def get_s3_file(bucket_name, file_name):
+    
+    print(f"bucket: {bucket_name} / {file_name}")
+    s3 = boto3.resource("s3")
+    
+    file = s3.Object(bucket_name, file_name)
+    
+    shed = file.get()["Body"].read()
+    
+    return json.loads(shed)
+
 
 def generate_cloud_watch_rules(event, handler):
+
+    print("current time:")
+    print(datetime.now().time())
+    
+    print("current timezone")
+    print(time.tzname)
+    
+    bucket_name = os.environ.get("BUCKET_NAME")
+    bucket_file = os.environ.get("BUCKET_FILE")
+
 
     # cloud watch event rule
     event_rule_prefix = os.environ.get("EVENT_RULE_PREFIX") or "event-scale-emc-"
 
     # next lambda
     lambda_arn = os.environ.get("AUTOSCALE_LAMBDA_ARN")
-
     lambda_name = lambda_arn.split(":")[-1]
 
     # scaling target
@@ -29,7 +51,12 @@ def generate_cloud_watch_rules(event, handler):
     # main
     data = event_data(event=event)
 
-    shedule_time = data["shedule_table"]
+    if data.get("shedule_table"):
+        shedule_time = data["shedule_table"]
+    else:
+        d = get_s3_file(bucket_name, bucket_file)
+        shedule_time = d["shedule_table"]
+        del(d)
 
     df = st.get_shedule(shedule_time)
 
@@ -42,7 +69,8 @@ def generate_cloud_watch_rules(event, handler):
         utc_time = row["utc_time"]
         min_count = row["count"]
 
-        print(datetime_to_cron(utc_time))
+        print("utc_time: " + datetime_to_cron(utc_time))
+        print("time: " + datetime_to_cron(row["time"]))
         print(min_count)
         # print(index)
 

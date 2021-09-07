@@ -1,5 +1,5 @@
-FROM ubuntu:latest
-RUN apt update; apt install -y python3-numpy python3-distutils curl
-RUN curl -fsSl "https://bootstrap.pypa.io/get-pip.py" > get_pip.py; python3 get_pip.py
-RUN apt autoremove -y curl
-RUN pip install pandas pymongo pytz
+FROM public.ecr.aws/lambda/python:3.8
+COPY . .
+
+RUN  pip3 install -r requirements.txt
+CMD [ "app.handler" ] 
