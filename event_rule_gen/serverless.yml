@@ -1,0 +1,24 @@
+service: testing-shedule-event
+
+provider:
+  name: aws
+  region: ap-south-1
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  profile: school_guru
+
+plugins:
+  - serverless-python-requirements
+
+package:
+  exclude:
+    - venv/**
+
+custom:
+  pythonRequirements:
+    pythonBin: python3
+    fileName: requirements.txt
+
+functions:
+  auto-shedule:
+    handler: exam_shedule.generate_cloud_watch_rules

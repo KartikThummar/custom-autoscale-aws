@@ -1,0 +1,5 @@
+setuptools
+pymongo
+pytz
+numpy
+pandas
