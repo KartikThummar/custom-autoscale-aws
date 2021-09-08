@@ -1,5 +1,12 @@
+# sheduled Autocaling generator
+
+sudo npm install -G serverless
+npm i -D serverless-dotenv-plugin
+
 service_type: `ec2 | fargate`
-# input json data
+
+
+## input json data
 
     {
         "service_type": "ec2",
