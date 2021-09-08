@@ -1,24 +1,32 @@
-service: testing-shedule-event
+service: test-shedule-event
 
 provider:
   name: aws
-  region: ap-south-1
-  runtime: python3.8
-  lambdaHashingVersion: 20201221
-  profile: school_guru
+  region: us-east-1
+  profile: electromech
+  iam:
+    role:
+      name: test-shedule-event
+      statements:
+      - Effect: 'Allow'
+        Action: 
+          - 'lambda:AddPermission'
+          - 'lambda:InvokeFunction'
+        Resource: '*'
+      managedPolicies:
+      - 'arn:aws:iam::aws:policy/CloudWatchEventsFullAccess'
 
-plugins:
-  - serverless-python-requirements
-
-package:
-  exclude:
-    - venv/**
-
-custom:
-  pythonRequirements:
-    pythonBin: python3
-    fileName: requirements.txt
+  ecr:
+    # In this section you can define images that will be built locally and uploaded to ECR
+    images:
+      appimage:
+        path: ./
 
 functions:
   auto-shedule:
-    handler: exam_shedule.generate_cloud_watch_rules
+    image: 
+      name: appimage
+      command:
+        - exam_shedule.generate_cloud_watch_rules
+    environment:
+      AUTOSCALE_LAMBDA_ARN: arn:aws:lambda:us-east-1:303373580614:function:test-shedule-event-dev-auto-shedule
