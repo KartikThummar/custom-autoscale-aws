@@ -27,6 +27,8 @@ service_type: `ec2 | fargate`
 
 ### lambda 1
 
+- AWS_PROFILE=aws-profile
+
 - EVENT_RULE_PREFIX="test_scale"
 
 - AUTOSCALE_LAMBDA_ARN="arn:aws:lambda:ap-south-1:163742846785:function:testing-shedule-event-dev-testing-autoscale"
@@ -36,8 +38,6 @@ service_type: `ec2 | fargate`
 - BUCKET_NAME="testing-event-shedule"
 
 - BUCKET_FILE="hi"
-
-
 
 {
     "min_count": 2,

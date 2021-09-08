@@ -1,9 +1,13 @@
 service: test-shedule-event
+# useDotenv: true
+
+plugins:
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
   region: us-east-1
-  profile: electromech
+  profile: ${env:AWS_PROFILE}
   iam:
     role:
       name: test-shedule-event
@@ -22,6 +26,12 @@ provider:
       appimage:
         path: ./
 
+custom:
+  dotenv:
+    path: ./.env.dev
+    exclude:
+      - AWS_PROFILE
+
 functions:
   auto-shedule:
     image: 
@@ -29,4 +39,4 @@ functions:
       command:
         - exam_shedule.generate_cloud_watch_rules
     environment:
-      AUTOSCALE_LAMBDA_ARN: arn:aws:lambda:us-east-1:303373580614:function:test-shedule-event-dev-auto-shedule
+      AUTOSCALE_LAMBDA_ARN: ${env:AUTOSCALE_LAMBDA_ARN}
