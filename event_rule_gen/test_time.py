@@ -7,3 +7,9 @@ with open("./tst.json","r") as t:
     sd = json.loads(t.read())
     s = st.get_shedule(sd["shedule_table"])
     print(st.shedule(s))
+
+
+# local testing
+
+# from exam_shedule import generate_cloud_watch_rules
+# generate_cloud_watch_rules(sd, handler='')
