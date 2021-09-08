@@ -1,18 +1,18 @@
-
+service_type: `ec2 | fargate`
 # input json data
 
     {
+        "service_type": "ec2",
+        "scaling_group_name": "scl-ec2-group",
         "shedule_table":  {
-                "date": "06/08/2021",
-                "start_before": "15",
-                "end_after": "15",
-                "shedule": [
-                    {
-                        "start": "14:55:00",
-                        "end": "14:56:00",
-                        "count": 2
-                    }
-                ]
+            "date": "08/09/2021",
+            "shedule": [
+                {
+                    "start": "18:10:00",
+                    "end": "18:12:00",
+                    "count": 2
+                }
+            ]
         }
     }
 

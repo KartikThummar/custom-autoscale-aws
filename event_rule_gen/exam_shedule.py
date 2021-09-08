@@ -41,8 +41,6 @@ def generate_cloud_watch_rules(event, handler):
     lambda_arn = os.environ.get("AUTOSCALE_LAMBDA_ARN")
     lambda_name = lambda_arn.split(":")[-1]
 
-    # scaling target
-    autoscaling_group_name = os.environ.get("AUTO_SCALE_GROUP_NAME")
 
     # extra info
     aws_region  = lambda_arn.split(":")[3]
@@ -53,9 +51,15 @@ def generate_cloud_watch_rules(event, handler):
 
     if data.get("shedule_table"):
         shedule_time = data["shedule_table"]
+        # scaling target
+        autoscaling_group_name = data["scaling_group_name"]
+        autoscaling_group_type = data["service_type"]
     else:
         d = get_s3_file(bucket_name, bucket_file)
         shedule_time = d["shedule_table"]
+        # scaling target
+        autoscaling_group_name = d["scaling_group_name"]
+        autoscaling_group_type = d["service_type"]
         del(d)
 
     df = st.get_shedule(shedule_time)
@@ -81,6 +85,7 @@ def generate_cloud_watch_rules(event, handler):
             input_data={
                 "min_count": min_count,
                 "autoscaling_group_name": autoscaling_group_name,
+                "autoscaling_group_type": autoscaling_group_type,
                 "event_rule_arn": f"arn:aws:events:{aws_region}:{account_id}:rule/{event_rule_prefix}-{index}",
                 "event_rule_name": f"{event_rule_prefix}-{index}",
                 "statement_id": f"statement-id-{event_rule_prefix}-{index}",
