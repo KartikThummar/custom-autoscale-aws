@@ -135,6 +135,7 @@ tmp
 tmp*
 tst*
 
+# --------------CUSTOM-----------------
 .serverless
 serverless.yml
 test_time.py
