@@ -7,6 +7,7 @@ import os
 import json
 from datetime import datetime
 import time
+import uuid
 
 api_return = ApiGatewayResponse()
 
@@ -35,7 +36,7 @@ def generate_cloud_watch_rules(event, handler):
 
 
     # cloud watch event rule
-    event_rule_prefix = os.environ.get("EVENT_RULE_PREFIX") or "event-scale-emc-"
+    event_rule_prefix = os.environ.get("EVENT_RULE_PREFIX") or "event-scale"
 
     # next lambda
     lambda_arn = os.environ.get("AUTOSCALE_LAMBDA_ARN")
@@ -78,16 +79,17 @@ def generate_cloud_watch_rules(event, handler):
         print(min_count)
         # print(index)
 
+        rule_name = f"{event_rule_prefix}-{uuid.uuid4()}"
         r = put_rule(
             
-            name=f"{event_rule_prefix}-{index}",
+            name=rule_name,
             time=utc_time,
             input_data={
                 "min_count": min_count,
                 "autoscaling_group_name": autoscaling_group_name,
                 "autoscaling_group_type": autoscaling_group_type,
                 "event_rule_arn": f"arn:aws:events:{aws_region}:{account_id}:rule/{event_rule_prefix}-{index}",
-                "event_rule_name": f"{event_rule_prefix}-{index}",
+                "event_rule_name": rule_name,
                 "statement_id": f"statement-id-{event_rule_prefix}-{index}",
                 "lambda_function_name": lambda_name
             },
@@ -100,7 +102,7 @@ def generate_cloud_watch_rules(event, handler):
             
                 lambda_arn=lambda_arn,
                 event_arn=r["rule"]["RuleArn"],
-                statement_id=f"statement-id-{event_rule_prefix}-{index}",
+                statement_id=f"statement-{rule_name}",
             )
     
     api_return.body({"response": {"rule":r,"lambda":a}}, status_code=200)
