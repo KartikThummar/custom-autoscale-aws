@@ -98,7 +98,7 @@ def generate_cloud_watch_rules(event, handler):
             a = attach_event_rule(
                 lambda_arn=lambda_arn,
                 event_arn=r["rule"]["RuleArn"],
-                statement_id=f"statement-{rule_name}",
+                statement_id=f"id-{rule_name}",
             )
 
     api_return.body({"response": {"rule": r, "lambda": a}}, status_code=200)
