@@ -1,22 +1,27 @@
 
-service: testing-shedule-event
+service: test-shedule-scale
 
 provider:
   name: aws
-  region: ap-south-1
-  runtime: python3.8
-  lambdaHashingVersion: 20201221
-  profile: school_guru
-
-plugins:
-  - serverless-python-requirements
+  region: us-east-1
+  profile: ${env:AWS_PROFILE}
+  
+  ecr:
+    # In this section you can define images that will be built locally and uploaded to ECR
+    images:
+      autoscaler:
+        path: ./
 
 custom:
-  pythonRequirements:
-    pythonBin: python3
-    fileName: requirements.txt
+  dotenv:
+    path: ./.env.dev
+    exclude:
+      - AWS_PROFILE
 
 
 functions:
   testing-autoscale:
-    handler: ec2.update_ec2_autoscale
+    image: 
+      name: autoscaler
+      command:
+        - ec2.update_ec2_autoscale
