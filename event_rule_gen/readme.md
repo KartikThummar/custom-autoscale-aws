@@ -10,6 +10,8 @@ service_type: `ec2 | fargate`
 
 ### ec2
 
+`scaling_group_name = NAME OF EC2 SCALIGING GROUP`
+
     {
         "service_type": "ec2",
         "scaling_group_name": "scl",
