@@ -1,4 +1,4 @@
-service: test-shedule-scale
+service: shedule-event
 
 plugins:
   - serverless-dotenv-plugin
@@ -14,6 +14,26 @@ provider:
       autoscaler:
         path: ./
 
+  iam:
+    role:
+      name: shedule-event-scale
+      statements:
+      - Effect: 'Allow'
+        Action: 
+          - 'application-autoscaling:*'
+          - 'autoscaling:UpdateAutoScalingGroup'
+          - 'events:DeleteRule'
+          - 'lambda:RemovePermission'
+          - 'events:ListTargetsByRule'
+          - 'events:DeleteEventBus'
+          - 'events:DeleteConnection'
+          - 'events:RemovePermission'
+          - 'events:RemoveTargets'
+          - 'events:DeleteArchive'          
+        Resource: '*'
+      managedPolicies:
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceAutoscaleRole
+
 custom:
   dotenv:
     path: ./.env.dev
@@ -22,7 +42,7 @@ custom:
 
 
 functions:
-  testing-autoscale:
+  autoscale:
     image: 
       name: autoscaler
       command:

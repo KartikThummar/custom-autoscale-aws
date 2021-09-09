@@ -1,4 +1,4 @@
-service: test-shedule-event
+service: shedule-event
 # useDotenv: true
 
 plugins:
@@ -10,7 +10,7 @@ provider:
   profile: ${env:AWS_PROFILE}
   iam:
     role:
-      name: test-shedule-event
+      name: shedule-event-rules
       statements:
       - Effect: 'Allow'
         Action: 
@@ -23,7 +23,7 @@ provider:
   ecr:
     # In this section you can define images that will be built locally and uploaded to ECR
     images:
-      appimage:
+      eventsheduler:
         path: ./
 
 custom:
@@ -35,7 +35,7 @@ custom:
 functions:
   auto-shedule:
     image: 
-      name: appimage
+      name: eventsheduler
       command:
         - exam_shedule.generate_cloud_watch_rules
     environment:
