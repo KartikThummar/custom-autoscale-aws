@@ -1,4 +1,4 @@
-service: shedule-event
+service: shedule-eventscale
 
 plugins:
   - serverless-dotenv-plugin
