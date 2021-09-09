@@ -13,3 +13,9 @@ schoolG
                 ]
         }
     }
+
+1. deploy scale
+
+copy scale arn > event_rule_gen/.env.dev
+
+2. deploy event_rule_gen
