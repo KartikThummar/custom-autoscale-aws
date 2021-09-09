@@ -79,6 +79,7 @@ def generate_cloud_watch_rules(event, handler):
         # print(index)
 
         rule_name = f"{event_rule_prefix}-{uuid.uuid4()}"
+        statement_id = f"id-{rule_name}"
         r = put_rule(
             name=rule_name,
             time=utc_time,
@@ -88,7 +89,7 @@ def generate_cloud_watch_rules(event, handler):
                 "service_type": service_type,
                 "event_rule_arn": f"arn:aws:events:{aws_region}:{account_id}:rule/{event_rule_prefix}-{index}",
                 "event_rule_name": rule_name,
-                "statement_id": f"id-{rule_name}",
+                "statement_id": statement_id,
                 "lambda_function_name": lambda_name,
             },
             lambda_arn=lambda_arn,
@@ -98,7 +99,7 @@ def generate_cloud_watch_rules(event, handler):
             a = attach_event_rule(
                 lambda_arn=lambda_arn,
                 event_arn=r["rule"]["RuleArn"],
-                statement_id=f"id-{rule_name}",
+                statement_id=statement_id,
             )
 
     api_return.body({"response": {"rule": r, "lambda": a}}, status_code=200)
