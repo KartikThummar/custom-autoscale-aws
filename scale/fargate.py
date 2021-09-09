@@ -1,5 +1,6 @@
 import boto3
 
+
 def update_ecs_autoscale(service_name, cluster_name, min_count):
 
     client = boto3.client("application-autoscaling")

@@ -45,7 +45,7 @@ def get_shedule(shedule: dict):
         end = df.end.get(i)
         d_c = df.desired_count.get(i)
         f.append({"time": start, "d_count": d_c})
-        f.append({"time": end, "d_count": - d_c})
+        f.append({"time": end, "d_count": -d_c})
 
     tf = pd.DataFrame(f)
     tf = tf.sort_values("time")

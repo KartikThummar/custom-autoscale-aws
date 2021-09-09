@@ -7,6 +7,7 @@ api_return = ApiGatewayResponse()
 
 MIN_COUNT = 1
 
+
 def lambda_handler(event, handler):
     api_return.body({"response": ""}, status_code=200)
 
@@ -27,14 +28,14 @@ def lambda_handler(event, handler):
     # check for ec2 or ecs
     if service_type.lower() == "ec2":
         scale_response = update_ec2_autoscale(autoscaling_group_name, count)
-    
+
     elif service_type.lower() in ["ecs", "fargate"]:
         cluster_name = autoscaling_group_name.split("/")[1]
         service_name = autoscaling_group_name.split("/")[2]
         scale_response = update_ecs_autoscale(
             cluster_name=cluster_name, service_name=service_name, min_count=count
         )
-    
+
     else:
         return False
 
