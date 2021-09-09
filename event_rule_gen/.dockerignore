@@ -140,3 +140,4 @@ tst*
 serverless.yml
 test_time.py
 .vscode
+node_modules
