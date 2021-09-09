@@ -88,7 +88,7 @@ def generate_cloud_watch_rules(event, handler):
                 "service_type": service_type,
                 "event_rule_arn": f"arn:aws:events:{aws_region}:{account_id}:rule/{event_rule_prefix}-{index}",
                 "event_rule_name": rule_name,
-                "statement_id": f"statement-id-{rule_name}",
+                "statement_id": f"id-{rule_name}",
                 "lambda_function_name": lambda_name,
             },
             lambda_arn=lambda_arn,
