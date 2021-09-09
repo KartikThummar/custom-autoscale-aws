@@ -38,6 +38,7 @@ service_type: `ec2 | fargate`
 ### fargate
 
 ecs_cluster = YOUR CLUSTER NAME
+
 ecs_service = YOUR SERVICE NAME
 
     {
