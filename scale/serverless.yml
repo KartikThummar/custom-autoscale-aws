@@ -1,5 +1,7 @@
-
 service: test-shedule-scale
+
+plugins:
+  - serverless-dotenv-plugin
 
 provider:
   name: aws
@@ -24,4 +26,4 @@ functions:
     image: 
       name: autoscaler
       command:
-        - ec2.update_ec2_autoscale
+        - main.lambda_handler
