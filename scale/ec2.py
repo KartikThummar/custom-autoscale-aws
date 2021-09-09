@@ -2,10 +2,6 @@ from botocore.exceptions import ClientError
 import logging
 import boto3
 
-
-# boto_sess = Session(profile_name='school_guru')
-# client = boto_sess.client('autoscaling')
-
 # ARN = """automation-auto-scaling-testing"""
 
 
