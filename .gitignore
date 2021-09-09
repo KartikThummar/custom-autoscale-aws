@@ -135,3 +135,4 @@ tmp
 tmp*
 tst*
 node_modules
+.vscode
