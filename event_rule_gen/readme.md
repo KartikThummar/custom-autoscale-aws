@@ -37,9 +37,12 @@ service_type: `ec2 | fargate`
 
 ### fargate
 
+ecs_cluster = YOUR CLUSTER NAME
+ecs_service = YOUR SERVICE NAME
+
     {
         "service_type": "fargate",
-        "scaling_group_name": "service/scale/demo",
+        "scaling_group_name": "service/ecs_cluster/ecs_service",
         "shedule_table":  {
             "date": "09/09/2021",
             "shedule": [
