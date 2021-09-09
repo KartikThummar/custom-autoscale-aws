@@ -33,7 +33,7 @@ custom:
       - AWS_PROFILE
 
 functions:
-  auto-shedule:
+  auto-rule:
     image: 
       name: eventsheduler
       command:
