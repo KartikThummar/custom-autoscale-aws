@@ -1,0 +1,22 @@
+
+service: testing-shedule-event
+
+provider:
+  name: aws
+  region: ap-south-1
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  profile: school_guru
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    pythonBin: python3
+    fileName: requirements.txt
+
+
+functions:
+  testing-autoscale:
+    handler: ec2.update_ec2_autoscale

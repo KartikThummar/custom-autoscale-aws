@@ -1,0 +1,3 @@
+# bson
+boto3
+pymongo
