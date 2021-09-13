@@ -1,13 +1,16 @@
 service: shedule-event
 # useDotenv: true
 
+
 plugins:
   - serverless-dotenv-plugin
+
+# variablesResolutionMode: 20210326
 
 provider:
   name: aws
   region: us-east-1
-  profile: ${env:AWS_PROFILE}
+  profile: ${env:ENV_AWS_PROFILE}
   iam:
     role:
       name: shedule-event-rules
@@ -16,6 +19,7 @@ provider:
         Action: 
           - 'lambda:AddPermission'
           - 'lambda:InvokeFunction'
+          - 's3:GetObject'
         Resource: '*'
       managedPolicies:
       - 'arn:aws:iam::aws:policy/CloudWatchEventsFullAccess'
@@ -30,13 +34,19 @@ custom:
   dotenv:
     path: ./.env.dev
     exclude:
-      - AWS_PROFILE
+      - ENV_AWS_PROFILE
 
 functions:
-  auto-rule:
+  app1:
     image: 
       name: eventsheduler
       command:
         - exam_shedule.generate_cloud_watch_rules
+    events:
+      - s3:
+          bucket: shedule-event-ec2
+          event: s3:ObjectCreated:*
     environment:
       AUTOSCALE_LAMBDA_ARN: ${env:AUTOSCALE_LAMBDA_ARN}
+      BUCKET_NAME: shedule-event-ec2
+      BUCKET_FILE: test.json
