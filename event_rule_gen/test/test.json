@@ -1,0 +1,14 @@
+{
+    "service_type": "fargate",
+    "scaling_group_name": "service/scale/demo",
+    "shedule_table":  {
+        "date": "13/09/2021",
+        "shedule": [
+            {
+                "start": "11:55:00",
+                "end": "11:57:00",
+                "count": 4
+            }
+        ]
+    }
+}
