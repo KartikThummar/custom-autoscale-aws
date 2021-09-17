@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 import pandas as pd
 import pytz
 
-
 def time(datetime_str):
     return datetime.strptime(datetime_str, "%d/%m/%Y %H:%M:%S")
 
@@ -15,7 +14,7 @@ def get_shedule(shedule: dict):
         tmp = {}
 
         if shedule.get("start_before"):
-            start_before = int(shedule.get("start_before"))
+            start_before = int(f'{shedule.get("start_before")}')
             start_time = time(f'{shedule["date"]} {i["start"]}') + timedelta(
                 minutes=start_before
             )
@@ -23,7 +22,7 @@ def get_shedule(shedule: dict):
             start_time = time(f'{shedule["date"]} {i["start"]}')
 
         if shedule.get("end_after"):
-            end_after = int(shedule.get("end_after"))
+            end_after = int(f'{shedule.get("end_after")}')
             end_time = time(f'{shedule["date"]} {i["end"]}') + timedelta(
                 minutes=end_after
             )
@@ -38,20 +37,20 @@ def get_shedule(shedule: dict):
 
     df = pd.DataFrame(final)
 
-    f = []
+    s: list = []
     for i in range(len(df)):
 
         start = df.start.get(i)
         end = df.end.get(i)
         d_c = df.desired_count.get(i)
-        f.append({"time": start, "d_count": d_c})
-        f.append({"time": end, "d_count": -d_c})
+        s.append({"time": start, "d_count": d_c})
+        s.append({"time": end, "d_count": -d_c})
 
-    tf = pd.DataFrame(f)
+    tf = pd.DataFrame(s)
     tf = tf.sort_values("time")
     tf = tf.reset_index(drop=True)
 
-    f = {}
+    f: dict = {}
     #     count = 0
 
     for index, row in tf.iterrows():
