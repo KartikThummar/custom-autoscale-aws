@@ -5,15 +5,16 @@ sys.path.append("../")
 import shedule_table as st
 from shedule_event import datetime_to_cron, put_rule, attach_event_rule
 import json
+from exam_shedule import generate_rules
 
 
 with open("./test.json", "r") as t:
-    sd = json.loads(t.read())
-    s = st.get_shedule(sd["shedule_table"])
-    print(st.shedule(s))
+    e = json.loads(t.read())
 
 
-# local testing
+def multi_sevice_shedule_rule(event, handler):
+    for every in event:
+        # local testing
+        generate_rules(every)
 
-# from exam_shedule import generate_cloud_watch_rules
-# generate_cloud_watch_rules(sd, handler='')
+multi_sevice_shedule_rule(e,'')
