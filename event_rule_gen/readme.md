@@ -89,3 +89,46 @@ service_type: `ec2 | fargate`
     "statement_id": "statement-id-test_autoscale-0",
     "lambda_function_name": "testing-shedule-event-dev-testing-autoscale"
 }
+
+Example input to s3 file:
+
+    [
+        {
+            "service_type": "fargate",
+            "scaling_group_name": "service/scale/demo",
+            "shedule_table":  {
+                "date": "17/09/2021",
+                "shedule": [
+                    {
+                        "start": "11:55:00",
+                        "end": "11:57:00",
+                        "count": 4
+                    },
+                    {
+                        "start": "11:45:00",
+                        "end": "13:57:00",
+                        "count": 40
+                    }
+                ]
+            }
+        },
+        {
+            "service_type": "ec2",
+            "scaling_group_name": "demo",
+            "shedule_table":  {
+                "date": "17/09/2021",
+                "shedule": [
+                    {
+                        "start": "12:55:00",
+                        "end": "12:57:00",
+                        "count": 4
+                    },
+                    {
+                        "start": "12:45:00",
+                        "end": "13:57:00",
+                        "count": 40
+                    }
+                ]
+            }
+        }
+    ]
