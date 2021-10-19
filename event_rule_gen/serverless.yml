@@ -37,11 +37,11 @@ custom:
       - ENV_AWS_PROFILE
 
 functions:
-  app1:
+  rulesgen:
     image: 
       name: eventsheduler
       command:
-        - exam_shedule.generate_cloud_watch_rules
+        - exam_shedule.multi_sevice_shedule_rule
     events:
       - s3:
           bucket: shedule-event-ec2

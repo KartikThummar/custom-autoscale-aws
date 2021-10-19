@@ -1,13 +1,13 @@
 import boto3
 from botocore.exceptions import ClientError
-from utils.event import event_data, ApiGatewayResponse
-import shedule_table as st
-from shedule_event import datetime_to_cron, put_rule, attach_event_rule
 import os
 import json
 from datetime import datetime
 import time
 import uuid
+import shedule_table as st
+from utils.event import event_data, ApiGatewayResponse
+from shedule_event import datetime_to_cron, put_rule, attach_event_rule
 
 api_return = ApiGatewayResponse()
 
@@ -21,10 +21,10 @@ def get_s3_file(bucket_name, file_name):
 
     shed = file.get()["Body"].read()
 
-    return json.loads(shed)
+    return shed
 
 
-def generate_cloud_watch_rules(event, handler):
+def generate_rules(event):
 
     print("current time:")
     print(datetime.now().time())
@@ -32,35 +32,25 @@ def generate_cloud_watch_rules(event, handler):
     print("current timezone")
     print(time.tzname)
 
-    bucket_name = os.environ.get("BUCKET_NAME")
-    bucket_file = os.environ.get("BUCKET_FILE")
-
     # cloud watch event rule
     event_rule_prefix = os.environ.get("EVENT_RULE_PREFIX") or "event-scale"
 
     # next lambda
     lambda_arn = os.environ.get("AUTOSCALE_LAMBDA_ARN")
-    lambda_name = lambda_arn.split(":")[-1]
+
+    lambda_name = lambda_arn.split(":")[-1] if isinstance(lambda_arn, str) else ""
 
     # extra info
-    aws_region = lambda_arn.split(":")[3]
-    account_id = lambda_arn.split(":")[4]
+    aws_region = lambda_arn.split(":")[3] if isinstance(lambda_arn, str) else ""
+    account_id = lambda_arn.split(":")[4] if isinstance(lambda_arn, str) else ""
 
     # main
     data = event_data(event=event)
 
-    if data.get("shedule_table"):
-        shedule_time = data["shedule_table"]
-        # scaling target
-        autoscaling_group_name = data["scaling_group_name"]
-        service_type = data["service_type"]
-    else:
-        d = get_s3_file(bucket_name, bucket_file)
-        shedule_time = d["shedule_table"]
-        # scaling target
-        autoscaling_group_name = d["scaling_group_name"]
-        service_type = d["service_type"]
-        del d
+    shedule_time = data["shedule_table"]
+    # scaling target
+    autoscaling_group_name = data["scaling_group_name"]
+    service_type = data["service_type"]
 
     df = st.get_shedule(shedule_time)
 
@@ -80,6 +70,7 @@ def generate_cloud_watch_rules(event, handler):
 
         rule_name = f"{event_rule_prefix}-{uuid.uuid4()}"
         statement_id = f"id-{rule_name}"
+
         r = put_rule(
             name=rule_name,
             time=utc_time,
@@ -105,3 +96,20 @@ def generate_cloud_watch_rules(event, handler):
     api_return.body({"response": {"rule": r, "lambda": a}}, status_code=200)
 
     return api_return.response()
+
+
+def multi_sevice_shedule_rule(event, handler):
+
+    if not isinstance(event, list):
+        bucket_name = os.environ.get("BUCKET_NAME")
+        bucket_file = os.environ.get("BUCKET_FILE")
+        event = json.loads(get_s3_file(bucket_name, bucket_file))
+    
+    resoponses = []
+    for every in event:
+        if not isinstance(every["shedule_table"], dict):
+            assert("invalid input")
+
+        resoponses.append(generate_rules(every))
+    
+    return resoponses
