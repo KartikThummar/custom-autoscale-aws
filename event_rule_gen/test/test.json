@@ -19,8 +19,8 @@
         }
     },
     {
-        "service_type": "fargate",
-        "scaling_group_name": "service/scale/demo",
+        "service_type": "ec2",
+        "scaling_group_name": "demo",
         "shedule_table":  {
             "date": "17/09/2021",
             "shedule": [
