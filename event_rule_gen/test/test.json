@@ -3,7 +3,7 @@
         "service_type": "fargate",
         "scaling_group_name": "service/scale/demo",
         "shedule_table":  {
-            "date": "17/09/2021",
+            "date": "20/10/2021",
             "shedule": [
                 {
                     "start": "11:55:00",
@@ -22,7 +22,7 @@
         "service_type": "ec2",
         "scaling_group_name": "demo",
         "shedule_table":  {
-            "date": "17/09/2021",
+            "date": "20/10/2021",
             "shedule": [
                 {
                     "start": "12:55:00",
