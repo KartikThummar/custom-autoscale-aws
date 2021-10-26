@@ -18,23 +18,33 @@ There are 2 parts in order to perform this process
 
 ## Steps for implementation
 
-schoolG
+1. Install serverless on your local device.
 
-    {
-        "shedule_table":  {
-                "date": "08/08/2021",
-                "shedule": [
-                    {
-                        "start": "18:10:00",
-                        "end": "18:12:00",
-                        "count": 2
-                    }
-                ]
-        }
-    }
+2. Create a s3 bucket on your aws account.
 
-1. deploy scale
+3. Go to directory `scale`.
 
-copy scale arn > event_rule_gen/.env.dev
+    - Create file `.env.dev`
 
-2. deploy event_rule_gen
+    - Define your aws cli profile in this file as env variable as below example
+    `AWS_PROFILE=electromech`
+
+    - After this perform `serverless deploy`
+
+    - this will create autoscaling lambda,further on to sheduling lambda part.
+
+4. Go to directory `event_rule_gen`
+
+    - Define your aws cli profile in this file as env variable as below example
+
+    - copy LAMBDA ARN created by `scale` part as follows
+
+            AWS_PROFILE=electromech
+            
+            AUTOSCALE_LAMBDA_ARN=arn:aws:lambda:us-east-1:303373580614:function:shedule-eventscale-dev-autoscale
+
+    - Rename parts where `# your bucket name` is defined with you created bucket name in `event_rule_gen/serverless.yml`
+
+    - Rename `# your bucket filename` with filename on you uploading json file for autoscaling sheduling.
+
+    - Perform `serverless deploy`
