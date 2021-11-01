@@ -68,27 +68,15 @@ service_type: `ec2 | fargate`
         }
     }
 
-## env vars
+## env vars in `.env.dev`
 
-### lambda 1
+        ENV_AWS_PROFILE="electromech"
+        ENV_AWS_REGION="us-east-1"
+        AUTOSCALE_LAMBDA_ARN="arn:aws:lambda:us-east-1:303373580614:function:shedule-eventscale-dev-autoscale"
+        BUCKET_NAME="shedule-event-ec2"
+        BUCKET_FILE="test.json"
 
-
-- EVENT_RULE_PREFIX="test_scale"
-
-- AUTOSCALE_LAMBDA_ARN="arn:aws:lambda:ap-south-1:163742846785:function:testing-shedule-event-dev-testing-autoscale"
-
-- BUCKET_NAME="testing-event-shedule"
-
-- BUCKET_FILE="hi"
-
-{
-    "min_count": 2,
-    "autoscaling_group_name": "automation-auto-scaling-testing",
-    "event_rule_arn": "arn:aws:events:ap-south-1:163742846785:rule/test_autoscale-0",
-    "event_rule_name": "test_autoscale-0",
-    "statement_id": "statement-id-test_autoscale-0",
-    "lambda_function_name": "testing-shedule-event-dev-testing-autoscale"
-}
+### lambda 2
 
 Example input to s3 file:
 

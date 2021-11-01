@@ -1,4 +1,10 @@
-# This code is to perform Automation on custom single time sheduled autoscaling for ec2/fargate
+# Custom autoscaling for ec2/fargate
+
+---
+
+# Problem statement
+
+---
 
 There are 2 parts in order to perform this process
 
@@ -27,7 +33,10 @@ There are 2 parts in order to perform this process
     - Create file `.env.dev`
 
     - Define your aws cli profile in this file as env variable as below example
-    `AWS_PROFILE=electromech`
+            
+            ENV_AWS_PROFILE="electromech"
+            ENV_AWS_REGION="us-east-1"
+
 
     - After this perform `serverless deploy`
 
@@ -39,7 +48,7 @@ There are 2 parts in order to perform this process
 
     - copy LAMBDA ARN created by `scale` part as follows
 
-            AWS_PROFILE=electromech
+            ENV_AWS_PROFILE=electromech
             
             AUTOSCALE_LAMBDA_ARN=arn:aws:lambda:us-east-1:303373580614:function:shedule-eventscale-dev-autoscale
 

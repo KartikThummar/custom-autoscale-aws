@@ -1,12 +1,13 @@
 service: shedule-eventscale
+useDotenv: true
 
 plugins:
   - serverless-dotenv-plugin
 
 provider:
   name: aws
-  region: us-east-1
-  profile: ${env:AWS_PROFILE}
+  region:  ${env:ENV_AWS_REGION}
+  profile: ${env:ENV_AWS_PROFILE}
   
   ecr:
     # In this section you can define images that will be built locally and uploaded to ECR
