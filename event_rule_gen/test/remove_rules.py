@@ -51,8 +51,10 @@ def remove_attached_rules(attached_function:str, rule_prefix:str):
 
 # x=del_rule('event-scale')
 
-t = list_lambda_triggers('hi')
+rule_function_name="rulegen-scale"
+
+t = list_lambda_triggers(rule_function_name)
 if t.get('Statement'):
     for sid in t['Statement']:
         print(sid['Sid'])
-        detach_lambda_rule('hi', sid['Sid'])
+        detach_lambda_rule(rule_function_name, sid['Sid'])
