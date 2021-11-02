@@ -2,7 +2,6 @@ from botocore.exceptions import ClientError
 import logging
 import boto3
 
-# ARN = """automation-auto-scaling-testing"""
 
 
 def update_ec2_autoscale(autoscaling_group_name, count):

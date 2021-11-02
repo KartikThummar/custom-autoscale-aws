@@ -49,7 +49,6 @@ def remove_attached_rules(attached_function:str, rule_prefix:str):
     time.sleep(3)
     del_rule(prefix=rule_prefix)
 
-# x=del_rule('event-scale')
 
 rule_function_name="rulegen-scale"
 

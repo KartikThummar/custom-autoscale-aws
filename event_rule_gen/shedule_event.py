@@ -19,11 +19,11 @@ def attach_event_rule(lambda_arn, event_arn, statement_id: str):
     trigger = client.add_permission(
         FunctionName=lambda_arn.split(":")[
             -1
-        ],  # 'testing-scale-auto-shedule-dev-testing-scale-auto'
+        ], 
         StatementId=statement_id,
         Action="lambda:InvokeFunction",
         Principal="events.amazonaws.com",
-        SourceArn=event_arn,  # 'arn:aws:events:ap-south-1:163742846785:rule/test-event-scale-emc'
+        SourceArn=event_arn,
     )
     return trigger
 
