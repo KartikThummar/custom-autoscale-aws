@@ -25,6 +25,10 @@ There are 2 parts in order to perform this process
 ## Steps for implementation
 
 1. Install serverless on your local device.
+        
+    - `sudo npm install -G serverless`
+
+    - Now inside git repo directory run: `npm i -D serverless-dotenv-plugin`
 
 2. Create a s3 bucket on your aws account where you will upload your sheduled scaling json file.
 
