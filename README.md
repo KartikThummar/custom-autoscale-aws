@@ -26,34 +26,14 @@ There are 2 parts in order to perform this process
 
 1. Install serverless on your local device.
 
-2. Create a s3 bucket on your aws account.
+2. Create a s3 bucket on your aws account where you will upload your sheduled scaling json file.
 
-3. Go to directory `scale`.
+3. provide required variables values at `.env.dev` file as follows
 
-    - Create file `.env.dev`
+        ENV_AWS_REGION="us-east-1"
+        ENV_AWS_PROFILE="electromech"
 
-    - Define your aws cli profile in this file as env variable as below example
-            
-            ENV_AWS_PROFILE="electromech"
-            ENV_AWS_REGION="us-east-1"
+        BUCKET_NAME="shedule-event-ec2"
+        BUCKET_FILE="test.json"
 
-
-    - After this perform `serverless deploy`
-
-    - this will create autoscaling lambda,further on to sheduling lambda part.
-
-4. Go to directory `event_rule_gen`
-
-    - Define your aws cli profile in this file as env variable as below example
-
-    - copy LAMBDA ARN created by `scale` part as follows
-
-            ENV_AWS_PROFILE=electromech
-            
-            AUTOSCALE_LAMBDA_ARN=arn:aws:lambda:us-east-1:303373580614:function:shedule-eventscale-dev-autoscale
-
-    - Rename parts where `# your bucket name` is defined with you created bucket name in `event_rule_gen/serverless.yml`
-
-    - Rename `# your bucket filename` with filename on you uploading json file for autoscaling sheduling.
-
-    - Perform `serverless deploy`
+4. run `serverless deploy`

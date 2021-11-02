@@ -47,7 +47,8 @@ custom:
     path: ./.env.dev
     exclude:
       - ENV_AWS_PROFILE
-  larn_prefix: arn:aws:lambda:${env:ENV_AWS_REGION}:${env:ENV_AWS_ACCOUNT_ID}:function
+  awsAccountId: ${aws:accountId}
+  larn_prefix: arn:aws:lambda:${env:ENV_AWS_REGION}:${self:custom.awsAccountId}:function
 
 functions:
   autoscale:
