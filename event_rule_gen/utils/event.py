@@ -38,11 +38,9 @@ class ApiGatewayResponse:
         }
 
 
-class botoClient:
-    def __init__(self):
-        pass
-
-    def session(self, profile_name=None, region_name=None):
+class botoSession:
+    
+    def __init__(self, profile_name=None, region_name=None):
         if profile_name:
             self.profile_name = profile_name
             try:

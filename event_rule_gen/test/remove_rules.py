@@ -1,12 +1,11 @@
 import sys
 sys.path.append("../")
 
-from utils.event import botoClient
+from utils.event import botoSession
 import json
 import time
 
-client = botoClient()
-sess = client.session(profile_name='electromech',region_name='us-east-1')
+sess = botoSession(profile_name='electromech',region_name='us-east-1')
 
 def list_lambda_triggers(FunctionName):
     client = sess.client("lambda")
