@@ -1,6 +1,7 @@
 import json
 from bson import json_util
 import boto3
+import botocore.exceptions
 
 
 def event_data(event):
@@ -37,13 +38,15 @@ class ApiGatewayResponse:
         }
 
 
-class Client:
-    def __init__(self):
-        pass
-
-    def client(self, client, profile_name=None):
+class botoSession:
+    
+    def __init__(self, profile_name=None, region_name=None):
         if profile_name:
             self.profile_name = profile_name
-            return boto3.Session(profile_name=profile_name).client(client)
+            try:
+                return boto3.Session(profile_name=profile_name, region_name=region_name)
+            except botocore.exceptions.ProfileNotFound:
+                return boto3.Session()
         else:
-            return boto3.client(client)
+            return boto3.Session()
+
