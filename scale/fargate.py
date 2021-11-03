@@ -10,7 +10,6 @@ def update_ecs_autoscale(service_name, cluster_name, min_count):
         ResourceId=f"service/{cluster_name}/{service_name}",
         ScalableDimension="ecs:service:DesiredCount",
         MinCapacity=min_count,
-        # MaxCapacity=10,
     )
 
     return response

@@ -63,7 +63,7 @@ functions:
     image: 
       name: eventsheduler
       command:
-        - exam_shedule.multi_sevice_shedule_rule
+        - scale_shedule.multi_sevice_shedule_rule
     events:
       - s3:
           bucket: ${env:BUCKET_NAME} # your bucket name

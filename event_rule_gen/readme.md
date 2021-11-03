@@ -1,8 +1,5 @@
 # sheduled Autocaling generator
 
-sudo npm install -G serverless
-npm i -D serverless-dotenv-plugin
-
 service_type: `ec2 | fargate`
 
 
@@ -68,17 +65,8 @@ service_type: `ec2 | fargate`
         }
     }
 
-## env vars in `.env.dev`
+### Example input to s3 file:
 
-        ENV_AWS_PROFILE="electromech"
-        ENV_AWS_REGION="us-east-1"
-        AUTOSCALE_LAMBDA_ARN="arn:aws:lambda:us-east-1:303373580614:function:shedule-eventscale-dev-autoscale"
-        BUCKET_NAME="shedule-event-ec2"
-        BUCKET_FILE="test.json"
-
-### lambda 2
-
-Example input to s3 file:
 
     [
         {
