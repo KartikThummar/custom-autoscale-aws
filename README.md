@@ -25,7 +25,7 @@ There are 2 parts in order to perform this process
 
 ## Flow Diagram
 
-![Diagram flow](https://raw.githubusercontent.com/electromech-117/schoolG/test/.github/images/customAutoScaling.jpeg?token=AVCSZ6KQKKFG4CLQHITPW5TBRNYHS)
+![Diagram flow](https://raw.githubusercontent.com/electromech-117/schoolG/test/.github/images/customAutoScaling.jpeg?token=AVCSZ6N6PQG7K5TRHS6ZEATBRNZAQ)
 
 ## prerequisite
 1. [Nodejs](https://nodejs.org/en/)
