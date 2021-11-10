@@ -39,7 +39,6 @@ class ApiGatewayResponse:
 
 
 class botoSession:
-    
     def __init__(self, profile_name=None, region_name=None):
         if profile_name:
             self.profile_name = profile_name
@@ -49,4 +48,3 @@ class botoSession:
                 return boto3.Session()
         else:
             return boto3.Session()
-

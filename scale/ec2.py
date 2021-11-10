@@ -3,7 +3,6 @@ import logging
 import boto3
 
 
-
 def update_ec2_autoscale(autoscaling_group_name, count):
 
     # auto scaling data

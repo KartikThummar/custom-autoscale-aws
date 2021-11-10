@@ -17,9 +17,7 @@ def attach_event_rule(lambda_arn, event_arn, statement_id: str):
     client = boto3.client("lambda")
 
     trigger = client.add_permission(
-        FunctionName=lambda_arn.split(":")[
-            -1
-        ], 
+        FunctionName=lambda_arn.split(":")[-1],
         StatementId=statement_id,
         Action="lambda:InvokeFunction",
         Principal="events.amazonaws.com",

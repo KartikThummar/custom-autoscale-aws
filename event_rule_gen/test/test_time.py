@@ -17,4 +17,5 @@ def multi_sevice_shedule_rule(event, handler):
         # local testing
         generate_rules(every)
 
-multi_sevice_shedule_rule(e,'')
+
+multi_sevice_shedule_rule(e, "")

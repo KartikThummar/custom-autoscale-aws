@@ -104,12 +104,12 @@ def multi_sevice_shedule_rule(event, handler):
         bucket_name = os.environ.get("BUCKET_NAME")
         bucket_file = os.environ.get("BUCKET_FILE")
         event = json.loads(get_s3_file(bucket_name, bucket_file))
-    
+
     resoponses = []
     for every in event:
         if not isinstance(every["shedule_table"], dict):
-            assert("invalid input")
+            assert "invalid input"
 
         resoponses.append(generate_rules(every))
-    
+
     return resoponses

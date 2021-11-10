@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 import pytz
 
+
 def time(datetime_str):
     return datetime.strptime(datetime_str, "%d/%m/%Y %H:%M:%S")
 
