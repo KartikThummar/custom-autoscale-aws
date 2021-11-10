@@ -23,6 +23,10 @@ There are 2 parts in order to perform this process
 - This rules will trigger next lambda [rulegen-scale](https://github.com/electromech-117/schoolG/tree/main/scale) which will perform task of modifing autoscaling minimum count of ec2/fargate and after updating autoscaling count, event rule will be removed as it was been made to run once only.
 
 
+## Flow Diagram
+
+![Diagram flow](https://raw.githubusercontent.com/electromech-117/schoolG/test/.github/images/customAutoScaling.jpeg?token=AVCSZ6KQKKFG4CLQHITPW5TBRNYHS)
+
 ## prerequisite
 1. [Nodejs](https://nodejs.org/en/)
 2. [npm](http://npmjs.org/install.sh)
