@@ -6,7 +6,8 @@ from utils.event import botoSession
 import json
 import time
 
-sess = botoSession(profile_name="electromech", region_name="us-east-1")
+boto = botoSession()
+sess = boto.session(profile_name="electromech", region_name="us-east-1")
 
 
 def list_lambda_triggers(FunctionName):
@@ -29,7 +30,6 @@ def detach_lambda_rule(function_name, statement_id):
     )
     return response
 
-
 def del_rule(prefix):
     event = sess.client("events")
     prefix_rules = event.list_rules(
@@ -37,7 +37,30 @@ def del_rule(prefix):
     )
 
     for rule in prefix_rules["Rules"]:
-        response = event.delete_rule(Name=rule["Name"], Force=True)
+        response = remove_cloudwatch_rule(rule["Name"])
+
+    return response
+
+def remove_cloudwatch_rule(name):
+
+    client = sess.client("events")
+
+    list_targets = client.list_targets_by_rule(
+        Rule=name,
+    )
+
+    ids = []
+
+    for target in list_targets["Targets"]:
+        ids.append(target["Id"])
+
+    client.remove_targets(
+        Rule=name,
+        Ids=ids,
+        # Force=True|False
+    )
+
+    response = client.delete_rule(Name=name)
 
     return response
 
@@ -52,10 +75,4 @@ def remove_attached_rules(attached_function: str, rule_prefix: str):
     del_rule(prefix=rule_prefix)
 
 
-rule_function_name = "rulegen-scale"
-
-t = list_lambda_triggers(rule_function_name)
-if t.get("Statement"):
-    for sid in t["Statement"]:
-        print(sid["Sid"])
-        detach_lambda_rule(rule_function_name, sid["Sid"])
+remove_attached_rules("rulegen-scale", rule_prefix="event-scale")
