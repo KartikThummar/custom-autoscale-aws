@@ -1,11 +1,8 @@
 import sys
-
+import json
 sys.path.append("../")
 
-import shedule_table as st
-from shedule_event import datetime_to_cron, put_rule, attach_event_rule
-import json
-from scale_shedule import generate_rules
+from event_rule_gen.scale_shedule import generate_rules
 
 
 with open("./test.json", "r") as t:
