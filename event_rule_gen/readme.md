@@ -8,27 +8,27 @@ You can either create YAML file or json file for putting shedules on s3 bucket
 
     ---
     - service_type: fargate
-    scaling_group_name: service/cluster-wp/fastapi
-    shedule_table:
-        date: 30/11/2021
-        shedule:
-        - start: '16:40:00'
-        end: '16:57:00'
-        count: 4
-        - start: '16:55:00'
-        end: '17:57:00'
-        count: 40
+      scaling_group_name: service/cluster-wp/fastapi
+      shedule_table:
+          date: 30/11/2021
+          shedule:
+          - start: '16:40:00'
+          end: '16:57:00'
+          count: 4
+          - start: '16:55:00'
+          end: '17:57:00'
+          count: 40
     - service_type: ec2
-    scaling_group_name: scl
-    shedule_table:
-        date: 30/11/2021
-        shedule:
-        - start: '16:10:00'
-        end: '17:37:00'
-        count: 4
-        - start: '17:35:00'
-        end: '18:57:00'
-        count: 6
+      scaling_group_name: scl
+      shedule_table:
+          date: 30/11/2021
+          shedule:
+          - start: '16:10:00'
+          end: '17:37:00'
+          count: 4
+          - start: '17:35:00'
+          end: '18:57:00'
+          count: 6
 
 ## input json data
 
