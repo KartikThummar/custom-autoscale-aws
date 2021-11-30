@@ -45,12 +45,14 @@ To install nodejs [click here](https://github.com/nodesource/distributions)
 
 2. Create a s3 bucket on your aws account where you will upload your sheduled scaling json file.
 
-3. provide required variables values at `.env.dev` file as follows
+3. provide required example variables values at `.env.dev` file as follows
 
-        ENV_AWS_REGION="us-east-1"
-        ENV_AWS_PROFILE="electromech"
+        ENV_AWS_REGION="<YOUR-REGION>"
+        ENV_AWS_PROFILE="<YOUR-PROFILE>"
 
         BUCKET_NAME="shedule-event-ec2"
         BUCKET_FILE="test.json"
 
 4. run `serverless deploy`
+
+This now in you aws account in s3 bucket `shedule-event-ec2` you can put scaling time shedules in file `test.json`
