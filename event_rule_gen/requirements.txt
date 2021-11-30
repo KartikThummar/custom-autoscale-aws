@@ -3,3 +3,4 @@ pymongo
 pytz
 numpy
 pandas
+PyYAML

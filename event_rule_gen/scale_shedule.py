@@ -8,6 +8,7 @@ import uuid
 import shedule_table as st
 from utils.event import event_data, ApiGatewayResponse
 from shedule_event import datetime_to_cron, put_rule, attach_event_rule
+import yaml
 
 api_return = ApiGatewayResponse()
 
@@ -18,11 +19,20 @@ def get_s3_file(bucket_name, file_name):
     s3 = boto3.resource("s3")
 
     file = s3.Object(bucket_name, file_name)
-
+    
     shed = file.get()["Body"].read()
 
-    return shed
+    # check for json or yml
+    __file_ext = file_name.split(".")[-1:][0]
 
+    if __file_ext == "json":
+        data: dict = json.loads(shed)
+    elif __file_ext in ["yml","yaml"]:
+        data: dict = yaml.full_load(shed)
+    else:
+        print(f"File ext: {__file_ext}")
+        raise Exception("not json or yaml")
+    return data
 
 def generate_rules(event):
 
@@ -103,7 +113,7 @@ def multi_sevice_shedule_rule(event, handler):
     if not isinstance(event, list):
         bucket_name = os.environ.get("BUCKET_NAME")
         bucket_file = os.environ.get("BUCKET_FILE")
-        event = json.loads(get_s3_file(bucket_name, bucket_file))
+        event = get_s3_file(bucket_name, bucket_file)
 
     resoponses = []
     for every in event:
