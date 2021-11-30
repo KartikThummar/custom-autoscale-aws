@@ -2,7 +2,7 @@ import sys
 
 sys.path.append("../")
 
-from utils.event import botoSession
+from util import botoSession
 import json
 import time
 
