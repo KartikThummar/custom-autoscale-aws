@@ -17,7 +17,7 @@ You can either create YAML file or json file for putting shedules on s3 bucket
             count: 4
           - start: '16:55:00'
             end: '17:57:00'
-            count: 40
+            count: 6
     - service_type: ec2
       scaling_group_name: scl
       shedule_table:
